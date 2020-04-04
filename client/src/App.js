@@ -7,14 +7,17 @@ import {
 
 import Header from './components/Header';
 import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
 
 export default () => {
 
   return (
-    <div>
-      <Header />
-      <Courses />
-    </div>
+    <Router>
+      <div>
+        <Header />
+        <CourseDetail />
+      </div>
+    </Router>
   )
 }
 

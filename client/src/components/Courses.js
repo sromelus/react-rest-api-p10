@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Course from '../screens/Course';
+import CourseScreen from '../screens/CourseScreen';
 
 export default class Courses extends Component {
   constructor(){
@@ -31,7 +31,7 @@ export default class Courses extends Component {
   render(){
     const courses = this.state.courses.map(course => {
       return (
-        <Course
+        <CourseScreen
           key={course.id}
           title={course.title}
         />
