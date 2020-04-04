@@ -1,48 +1,21 @@
 import React, { Component } from 'react';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
 
-class App extends Component {
-  constructor(){
-    super()
-    this.state = {
-      courses: []
-    }
-  }
+import Header from './components/Header';
+import Courses from './components/Courses';
 
-  componentDidMount(){
-    fetch('http://localhost:5000/api/courses')
-    .then(res => {
-      if(res.ok){
-        return res;
-      } else {
-        let errorMessage = `${res.status} (${res.statusText})`
-        const error = new Error(errorMessage);
-        throw(error);
-      }
-    })
-    .then(res => res.json())
-    .then(res => {
-      this.setState({ courses: res.courses})
-      console.log(this.state.courses);
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
-  }
+export default () => {
 
-  render(){
-    
-    const courses = this.state.courses.map(course => <li>{course.title}</li>)
-
-
-    return (
-      <div className="">
-        <header className="">
-          <ul>
-            {courses}
-          </ul>
-        </header>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Header />
+      <Courses />
+    </div>
+  )
 }
 
-export default App;
+// <Courses />
