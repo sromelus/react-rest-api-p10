@@ -33,6 +33,7 @@ export default class Courses extends Component {
       return (
         <CourseScreen
           key={course.id}
+          id={course.id}
           title={course.title}
         />
       )

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -8,6 +8,7 @@ import {
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
+import NotFound from './components/NotFound';
 
 export default () => {
 
@@ -15,7 +16,11 @@ export default () => {
     <Router>
       <div>
         <Header />
-        <CourseDetail />
+        <Switch>
+          <Route exact path="/" component={Courses} />
+          <Route path="/courses/:id" component={CourseDetail} />
+          <Route component={NotFound} />
+        </Switch>
       </div>
     </Router>
   )
