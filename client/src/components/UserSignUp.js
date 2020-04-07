@@ -20,6 +20,10 @@ export default class UserSignUp extends Component {
     this.props.history.push('/');
   }
 
+  signIn = () => {
+    this.props.history.push('/');
+  }
+
   handleLastNameChange = (e) => {
     this.setState({
       lastName: e.target.value
@@ -53,41 +57,51 @@ export default class UserSignUp extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const {firstName, lastName, emailAddress, password, confirmPassword } = this.state
-    console.log(firstName, lastName, emailAddress, password, confirmPassword);
 
-    const user = { firstName, lastName, emailAddress, password }
+    let passErrorMsg;
 
-    fetch('http://localhost:5000/api/users', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify(user)
-    })
-    .then(res => {
-      if (res.status === 201) {
-        return [];
-      } else if (res.status === 400){
-        return res.json()
-          .then(body => {
-            this.setState({
-              errors: body.errors
+    if(password !== confirmPassword){
+      passErrorMsg = "Password and Confirm Password does not match"
+      this.setState( prevState => ({
+          errors: [ passErrorMsg ]
+      }))
+    } else {
+
+      const user = { firstName, lastName, emailAddress, password }
+
+      fetch('http://localhost:5000/api/users', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(user)
+      })
+      .then(res => {
+        if (res.status === 201) {
+          this.signIn();
+          return [];
+        } else if (res.status === 400){
+          return res.json()
+            .then(body => {
+              this.setState( prevState => ({
+                errors: body.errors
+              }))
             })
-          })
-      } else if (res.status === 409){
-        return res.json()
-          .then(body => {
-            this.setState({
-              errors: body.error.split()
+        } else if (res.status === 409){
+          return res.json()
+            .then(body => {
+              this.setState(prevState => ({
+                errors: [ body.error ]
+              }))
             })
-          })
-      } else {
-        let errorMessage = `${res.status}(${res.statusText})` ,
-        error = new Error(errorMessage);
-        throw(error);
-      }
-    })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
+        } else {
+          let errorMessage = `${res.status}(${res.statusText})` ,
+          error = new Error(errorMessage);
+          throw(error);
+        }
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
   }
 
 
@@ -131,7 +145,8 @@ export default class UserSignUp extends Component {
   }
 }
 
-function ErrorsDisplay({ errors }) {
+
+const ErrorsDisplay = ({ errors }) => {
   let errorsDisplay = null;
 
   if (errors.length) {
