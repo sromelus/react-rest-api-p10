@@ -31,7 +31,7 @@ function asyncHandler(cb){
 router.get("/", authenticateUser, asyncHandler(async (req, res) => {
     const user = req.currentUser;
     const { firstName, lastName } = user;
-    res.json({
+    res.status(200).json({
         name: { firstName, lastName },
         email: `${user.emailAddress}`
     });

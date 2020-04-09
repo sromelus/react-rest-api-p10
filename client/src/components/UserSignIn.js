@@ -31,57 +31,29 @@ export default class UserSignIn extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { history } = this.props;
-
     const { signIn } = this.props.context.actions;
-
     const { emailAddress, password } = this.state;
 
-    signIn(emailAddress, password, history)
-
-
-
-
-
-
-
-    // fetch('http://localhost:5000/api/users', {
-    //   method: "GET",
-    //   headers: {
-    //     'Content-Type': 'application/json; charset=utf-8',
-    //     'Authorization': `Basic ${encodedCredentials}`
-    //   }
-    // })
-    // .then(res => {
-    //   if(res.ok) {
-    //     return res.json()
-    //     .then(user => {
-    //       this.setState({ user: user})
-    //       hoistSignedUser(this.state.user)
-    //       this.props.history.push('/');
-    //     })
-    //   } else if (res.status === 401){
-    //       return res.json()
-    //       .then(body => {
-    //         this.setState( prevState => ({
-    //           errors: [body.message]
-    //         }))
-    //       })
-    //   } else {
-    //     let errorMessage = `${res.status} (${res.statusText})`
-    //     const error = new Error(errorMessage);
-    //     throw(error);
-    //   }
-    // })
-    // .catch(error => console.error(`Error in fetch: ${error.message}`));
+    signIn(emailAddress, password)
+    .then(res => {
+      if(res === undefined) {
+        this.props.history.push('/');
+      } else if(res.status === 401) {
+          this.setState({
+              errors: [ 'Sign-in was unsuccessful' ]
+          });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      this.props.history.push('/error');
+    })
   }
 
 
   render(){
 
     const { emailAddress, password } = this.state
-
-    console.log( emailAddress, password );
 
     return (
       <div className="bounds">

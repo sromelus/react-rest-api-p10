@@ -10,7 +10,13 @@ export class Provider extends Component {
     }
   }
 
-  signIn = async (emailAddress, password, history) => {
+  /**
+   * A higher-order component that wraps the provided component in a Context Consumer component.
+   * @param {string, string, redirect path} EmailAddress . Password. Path.
+   * @returns {promise} A declaration that someting will happen.
+   */
+
+  signIn = async (emailAddress, password) => {
 
     const encodedCredentials = btoa(`${emailAddress}:${password}`);
 
@@ -22,15 +28,15 @@ export class Provider extends Component {
       }
     })
     .then(res => {
-       if(res.ok) {
+      if(res.status === 200){
         return res.json()
         .then(user => {
           this.setState({ user: user.name.firstName })
-          history.push('/');
         })
+      } else {
+        return res;
       }
     })
-    console.log(fetchRes)
     return fetchRes;
   }
 
@@ -40,7 +46,7 @@ export class Provider extends Component {
 
 
   render(){
-    const { user, errors } = this.state;
+    const { user } = this.state;
 
     const value = {
       user,
@@ -68,6 +74,7 @@ export const Consumer = Context.Consumer;
 
 export default function withContext(OriginalComponent) {
   return function ContextComponent(props) {
+    // debugger
     return (
       <Context.Consumer>
         {context => <OriginalComponent {...props} context={context} />}
