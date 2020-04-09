@@ -1,12 +1,17 @@
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
-import React from 'react';
+export default class UserSignOut extends Component {
 
-export default () => {
+  componentWillUnmount(){
+    this.props.context.actions.signOut();
+  }
 
+  render() {
     return (
-      <div className="">
-      </div>
+      <Redirect to="/" />
     );
+  }
 }
 
 // UserSignOut - This component is a bit of an oddball as it doesn't render any visual elements. Instead, it signs out the authenticated user and redirects the user to the default route (i.e. the list of courses).
