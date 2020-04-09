@@ -79,7 +79,7 @@ router.post('/', authenticateUser, courseInputsValidator, asyncHandler(async (re
       description: req.body.description,
       estimatedTime: req.body.estimatedTime,
       materialsNeeded: req.body.materialsNeeded,
-      userId: req.body.userId
+      userId: req.currentUser.id
     })
 
     res.location(`/api/courses/${course.id}`);
@@ -118,7 +118,7 @@ router.put('/:id', authenticateUser, courseInputsValidator, asyncHandler(async(r
         })
         res.status(204).end();
       } else {
-        res.status(403).json({ message: 'Forbidden'})
+        res.status(403).json({ message: ['Forbidden']})
       }
     } else {
       next();

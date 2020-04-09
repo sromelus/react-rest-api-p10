@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom';
 
 export default class Header extends PureComponent {
     render() {
-      const { authenticatedUser } = this.props.context;
+      const { user } = this.props.context;
 
       return (
         <div className="header">
           <div className="bounds">
             <h1 className="header--logo"><Link to="/">Courses</Link></h1>
-            { authenticatedUser ?
+            { user ?
               <nav>
-                <span>Welcome, {authenticatedUser.name}!</span>
-                <a className="signin" href="/signout">Sign Out</a>
+                <span>Welcome, {user}!</span>
+                <Link className="signout" to="/signout">Sign Out</Link>
               </nav>
               :
               <nav>
-                <a className="signup" href="/signup">Sign Up</a>
-                <a className="signin" href="/signin">Sign In</a>
+                <Link className="signup" to="/signup">Sign Up</Link>
+                <Link className="signin" to="/signin">Sign In</Link>
               </nav>
             }
           </div>

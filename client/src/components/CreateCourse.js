@@ -18,27 +18,10 @@ export default class CreateCourse extends Component {
     this.props.history.push('/');
   }
 
-  handleTitleChange = (e) => {
-    this.setState({
-      title: e.target.value
-    })
-  }
 
-  handleDescriptionChange = (e) => {
+  handleChange = (e) => {
     this.setState({
-      description: e.target.value
-    })
-  }
-
-  handleEstimatedTimeChange = (e) => {
-    this.setState({
-      estimatedTime: e.target.value
-    })
-  }
-
-  handleMaterialsNeededChange = (e) => {
-    this.setState({
-      materialsNeeded: e.target.value
+      [e.target.name]: e.target.value
     })
   }
 
@@ -54,7 +37,7 @@ export default class CreateCourse extends Component {
         method: "POST",
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          // 'Authorization': `Basic ${encodedCredentials}`
+          'Authorization': `Basic ${encodedCredentials}`
         },
         body: JSON.stringify(course)
       })
@@ -62,7 +45,7 @@ export default class CreateCourse extends Component {
         if (res.status === 201) {
           this.props.history.push('/');
           return [];
-        } else if (res.status === 400 || res.status === 401, res.status === 403){
+        } else if (res.status === 400 || res.status === 401 || res.status === 403){
             return res.json()
             .then(body => {
               this.setState( prevState => ({
@@ -90,11 +73,11 @@ export default class CreateCourse extends Component {
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
                 <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
-                    onChange={this.handleTitleChange} value={this.state.title}/></div>
+                    onChange={this.handleChange} value={this.state.title}/></div>
                 <p>By Joe Smith</p>
               </div>
               <div className="course--description">
-                <div><textarea id="description" name="description" className="" placeholder="Course description..." onChange={this.handleDescriptionChange} value={this.state.description}></textarea></div>
+                <div><textarea id="description" name="description" className="" placeholder="Course description..." onChange={this.handleChange} value={this.state.description}></textarea></div>
               </div>
             </div>
             <div className="grid-25 grid-right">
@@ -103,11 +86,11 @@ export default class CreateCourse extends Component {
                   <li className="course--stats--list--item">
                     <h4>Estimated Time</h4>
                     <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input"
-                        placeholder="Hours" onChange={this.handleEstimatedTimeChange} value={`${this.state.estimatedTime}`}/></div>
+                        placeholder="Hours" onChange={this.handleChange} value={`${this.state.estimatedTime}`}/></div>
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
-                    <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." onChange={this.handleMaterialsNeededChange} value={this.state.materialsNeeded}></textarea></div>
+                    <div><textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." onChange={this.handleChange} value={this.state.materialsNeeded}></textarea></div>
                   </li>
                 </ul>
               </div>

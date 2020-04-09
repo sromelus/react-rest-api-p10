@@ -24,34 +24,10 @@ export default class UserSignUp extends Component {
     this.props.history.push('/');
   }
 
-  handleLastNameChange = (e) => {
+  handleChange = (e) => {
     this.setState({
-      lastName: e.target.value
-    })
-  }
-
-  handleFirstNameChange = (e) => {
-    this.setState({
-      firstName: e.target.value
-    })
-  }
-
-  handleEmailChange = (e) => {
-    this.setState({
-      emailAddress: e.target.value
-    })
-  }
-
-  handlePasswordChange = (e) => {
-    this.setState({
-      password: e.target.value
-    })
-  }
-
-  handleConfirmPasswordChange = (e) => {
-    this.setState({
-      confirmPassword : e.target.value
-    })
+        [e.target.name] : e.target.value
+      })
   }
 
   handleSubmit = (e) => {
@@ -81,7 +57,7 @@ export default class UserSignUp extends Component {
           this.signIn();
           return [];
         } else if (res.status === 400){
-          return res.json()
+            return res.json()
             .then(body => {
               this.setState( prevState => ({
                 errors: body.errors
@@ -95,8 +71,8 @@ export default class UserSignUp extends Component {
               }))
             })
         } else {
-          let errorMessage = `${res.status}(${res.statusText})` ,
-          error = new Error(errorMessage);
+          let errorMessage = `${res.status}(${res.statusText})`
+          const error = new Error(errorMessage);
           throw(error);
         }
       })
@@ -105,9 +81,7 @@ export default class UserSignUp extends Component {
   }
 
 
-  render(){
-    // const {firstName, lastName, emailAddress, password, confirmPassword } = this.state
-    console.log(this.state.errors);
+  render() {
 
     return (
       <div className="bounds">
@@ -117,19 +91,19 @@ export default class UserSignUp extends Component {
           <div>
             <form onSubmit={this.handleSubmit}>
               <div>
-                <input id="firstName" name="firstName" type="text" className="" placeholder="First Name" onChange={this.handleFirstNameChange} value={this.state.firstName}/>
+                <input id="firstName" name="firstName" type="text" className="" placeholder="First Name" onChange={this.handleChange} value={this.state.firstName}/>
               </div>
               <div>
-                <input id="lastName" name="lastName" type="text" className="" placeholder="Last Name" onChange={this.handleLastNameChange} value={this.state.lastName}/>
+                <input id="lastName" name="lastName" type="text" className="" placeholder="Last Name" onChange={this.handleChange} value={this.state.lastName}/>
               </div>
               <div>
-                <input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" onChange={this.handleEmailChange} value={this.state.emailAddress}/>
+                <input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" onChange={this.handleChange} value={this.state.emailAddress}/>
               </div>
               <div>
-                <input id="password" name="password" type="password" className="" placeholder="Password" onChange={this.handlePasswordChange} value={this.state.password}/>
+                <input id="password" name="password" type="password" className="" placeholder="Password" onChange={this.handleChange} value={this.state.password}/>
               </div>
               <div>
-                <input id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password" onChange={this.handleConfirmPasswordChange} value={this.state.confirmPassword}/>
+                <input id="confirmPassword" name="confirmPassword" type="password" className="" placeholder="Confirm Password" onChange={this.handleChange} value={this.state.confirmPassword}/>
               </div>
               <div className="grid-100 pad-bottom">
                 <button className="button" type="submit">Sign Up</button>

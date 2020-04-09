@@ -6,9 +6,7 @@ export class Provider extends Component {
   constructor(){
     super()
     this.state = {
-      // authenticatedUser:  null,
       user: null
-      // errors: null
     }
   }
 
@@ -27,48 +25,25 @@ export class Provider extends Component {
        if(res.ok) {
         return res.json()
         .then(user => {
-          this.setState({ user: user })
+          this.setState({ user: user.name.firstName })
           history.push('/');
         })
       }
     })
-    //   } else if (res.status === 401){
-    //       return res.json()
-    //       .then(body => {
-    //         this.setState({
-    //           errors: [body.message]
-    //         })
-    //       })
-    //   } else {
-    //     let errorMessage = `${res.status} (${res.statusText})`
-    //     const error = new Error(errorMessage);
-    //     throw(error);
-    //   }
-    //   return res;
-    // })
     console.log(fetchRes)
     return fetchRes;
-    // .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   signOut = () => {
     this.setState({ user: null });
   }
 
-  componentDidMount(){
-    console.log('context willmount');
-  }
-
-  componentWillUnmount(){
-    console.log('test unmount');
-  }
 
   render(){
     const { user, errors } = this.state;
 
     const value = {
       user,
-      // errors,
       actions: {
         signIn: this.signIn,
         signOut: this.signOut

@@ -58,15 +58,20 @@ app.use((err, req, res, next) => {
   }
 
   if(err.name === 'SequelizeUniqueConstraintError' && err.fields.toString() === 'emailAddress'){
-    const msg = 'Sorry! An account with this email address already exists, please use another email.'
+    const msg = 'Email already exists, please use another email'
     err.message = msg;
     err.status = 409;
-  }
 
-  res.status(err.status || 500).json({
-    message: err.message,
-    error: process.env.NODE_ENV === 'production' ? {} : err
-  });
+    res.status(err.status || 500).json({
+      error: err.message
+    });
+
+  } else {
+    res.status(err.status || 500).json({
+      message: err.message,
+      error: process.env.NODE_ENV === 'production' ? {} : err
+    });
+  }
 });
 
 // set our port

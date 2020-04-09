@@ -19,27 +19,9 @@ export default class UpdateCourse extends Component {
     this.props.history.push('/');
   }
 
-  handleTitleChange = (e) => {
+  handleChange = (e) => {
     this.setState({
-      title: e.target.value
-    })
-  }
-
-  handleDescriptionChange = (e) => {
-    this.setState({
-      description: e.target.value
-    })
-  }
-
-  handleEstimatedTimeChange = (e) => {
-    this.setState({
-      estimatedTime: e.target.value
-    })
-  }
-
-  handleMaterialsNeededChange = (e) => {
-    this.setState({
-      materialsNeeded: e.target.value
+      [e.target.name]: e.target.value
     })
   }
 
@@ -91,7 +73,7 @@ export default class UpdateCourse extends Component {
         if (res.status === 204) {
           this.props.history.push('/');
           return [];
-        } else if (res.status === 400 || res.status === 401, res.status === 403){
+        } else if (res.status === 400 || res.status === 401 || res.status === 403){
             return res.json()
             .then(body => {
               this.setState( prevState => ({
@@ -107,11 +89,7 @@ export default class UpdateCourse extends Component {
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
-
-
-
   render(){
-    const { id } = this.props.match.params;
     const { title, description, estimatedTime, materialsNeeded} = this.state;
     const { firstName, lastName } = this.state.userCourse;
 
@@ -135,12 +113,12 @@ export default class UpdateCourse extends Component {
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
                 <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
-                    onChange={this.handleTitleChange} value={title}/></div>
+                    onChange={this.handleChange} value={title}/></div>
                 <p>By {`${firstName} ${lastName}`}</p>
               </div>
               <div className="course--description">
                 <div>
-                  <textarea id="description" name="description" className="" placeholder="Course description..." onChange={this.handleDescriptionChange} value={description}>
+                  <textarea id="description" name="description" className="" placeholder="Course description..." onChange={this.handleChange} value={description}>
                   </textarea>
                 </div>
               </div>
@@ -152,13 +130,13 @@ export default class UpdateCourse extends Component {
                     <h4>Estimated Time</h4>
                     <div>
                       <input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input"
-                        placeholder="Hours" onChange={this.handleEstimatedTimeChange} value={estimatedTime}/>
+                        placeholder="Hours" onChange={this.handleChange} value={estimatedTime}/>
                     </div>
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>
                     <div>
-                      <textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." onChange={this.handleMaterialsNeededChange} value={materialsNeeded}>
+                      <textarea id="materialsNeeded" name="materialsNeeded" className="" placeholder="List materials..." onChange={this.handleChange} value={materialsNeeded}>
                       </textarea>
                     </div>
                   </li>

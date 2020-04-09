@@ -46,7 +46,7 @@ const authenticateUser = async(req, res, next) => {
 
   if(message){
     console.warn(message);
-    res.status(401).json({ message: 'Access Denied'})
+    res.status(401).json({ message: ['Access Denied']})
   } else {
     next();
   }
@@ -55,8 +55,7 @@ const authenticateUser = async(req, res, next) => {
 const courseInputsValidator = [
   //Used "express validator's" check method to validate inputs
   check("title", 'Please provide a "title"').exists({checkNull: true, checkFalsy: true }),
-  check("description", 'Please provide a "description"').exists({checkNull: true, checkFalsy: true }),
-  check("userId", 'Please provide a "userId"').exists({ checkNull: true, checkFalsy: true })
+  check("description", 'Please provide a "description"').exists({checkNull: true, checkFalsy: true })
 ]
 
 const userInputsValidator = [

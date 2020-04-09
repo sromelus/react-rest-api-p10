@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class CourseDetail extends Component {
   constructor(){
@@ -23,34 +24,36 @@ export default class CourseDetail extends Component {
       }
     })
     .then(res => res.json())
-    .then(res => {
+    .then(body => {
       this.setState({
-        course: res.course,
-        materialsNeeded: res.course.materialsNeeded,
-        userCourse: res.course.userCourse
+        course: body.course,
+        materialsNeeded: body.course.materialsNeeded,
+        userCourse: body.course.userCourse
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   render(){
+    const { id } = this.props.match.params;
     const { title, description, estimatedTime } = this.state.course;
     const { firstName, lastName } = this.state.userCourse;
     const { materialsNeeded } = this.state;
 
     let materialsList = []
-    if(materialsNeeded.charAt() === '*'){
-      materialsList = materialsNeeded.split('*');
-      materialsList.shift()
-    } else {
-      materialsList = materialsNeeded.split(',');
+
+    if(materialsNeeded){
+      if(materialsNeeded.charAt() === '*'){
+        materialsList = materialsNeeded.split('*');
+        materialsList.shift()
+      } else {
+        materialsList = materialsNeeded.split(',');
+      }
     }
 
-    let materialKey = 0
-    const formattedMaterialsList = materialsList.map(material => {
-      materialKey += 1;
+    const formattedMaterialsList = materialsList.map((material, i) => {
       return (
-        <li key={materialKey}>{material}</li>
+        <li key={i}>{material}</li>
       )
     })
 
@@ -58,8 +61,8 @@ export default class CourseDetail extends Component {
       <div>
         <div className="actions--bar">
           <div className="bounds">
-            <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="#">Delete Course</a></span><a
-                className="button button-secondary" href="/">Return to List</a></div>
+            <div className="grid-100"><span><Link className="button" to={`/courses/${id}/update`}>Update Course</Link><Link className="button" to="#">Delete Course</Link></span><Link
+                className="button button-secondary" to="/">Return to List</Link></div>
           </div>
         </div>
         <div className="bounds course--detail">
@@ -78,7 +81,7 @@ export default class CourseDetail extends Component {
               <ul className="course--stats--list">
                 <li className="course--stats--list--item">
                   <h4>Estimated Time</h4>
-                  <h3>{estimatedTime} hours</h3>
+                  <h3>{estimatedTime}</h3>
                 </li>
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
