@@ -30,10 +30,10 @@ function asyncHandler(cb){
 
 router.get("/", authenticateUser, asyncHandler(async (req, res) => {
     const user = req.currentUser;
-    res.json({ user: {
-        name: `${user.firstName} ${user.lastName}`,
+    const { firstName, lastName } = user;
+    res.json({
+        name: { firstName, lastName },
         email: `${user.emailAddress}`
-      }
     });
 }));
 
@@ -44,7 +44,7 @@ router.post("/", userInputsValidator, asyncHandler(async(req, res) => {
 
   if(!errors.isEmpty()){
     const errorMessages = errors.array().map(error => error.msg);
-    res.status(400).json({message: errorMessages })
+    res.status(400).json({ errors: errorMessages })
   } else {
     const user = req.body;
     //Use bcrypt to hash user password when they sign up
