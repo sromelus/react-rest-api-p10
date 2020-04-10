@@ -1,6 +1,6 @@
-# REST API Project - With Express
+# USER INTERFACE OF COURSES API
 
-This project is an API that manages a mock up school database. The api currently manages two main data sets users and courses.
+This project is a front end application that manages a list of course from an API that serves a list of courses and users.
 
 
 ## Getting Started
