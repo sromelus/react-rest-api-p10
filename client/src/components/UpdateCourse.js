@@ -55,9 +55,9 @@ export default class UpdateCourse extends Component {
     e.preventDefault();
     const { title, description, estimatedTime, materialsNeeded } = this.state
 
-    const course = { title, description, estimatedTime, materialsNeeded }
+    const { emailAddress, password } = this.props.context.userCredential;
 
-    const encodedCredentials = btoa(`j@j.com:james`);
+    const encodedCredentials = btoa(`${emailAddress}:${password}`);
 
     const { id } = this.props.match.params;
 
@@ -67,7 +67,7 @@ export default class UpdateCourse extends Component {
           'Content-Type': 'application/json; charset=utf-8',
           'Authorization': `Basic ${encodedCredentials}`
         },
-        body: JSON.stringify(course)
+        body: JSON.stringify(this.state)
       })
       .then(res => {
         if (res.status === 204) {

@@ -11,7 +11,7 @@ export default class Header extends PureComponent {
             <h1 className="header--logo"><Link to="/">Courses</Link></h1>
             { user ?
               <nav>
-                <span>Welcome, {user}!</span>
+                <span>Welcome, {user.firstName}!</span>
                 <Link className="signout" to="/signout">Sign Out</Link>
               </nav>
               :

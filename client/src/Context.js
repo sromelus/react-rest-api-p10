@@ -6,7 +6,8 @@ export class Provider extends Component {
   constructor(){
     super()
     this.state = {
-      user: null
+      user: null,
+      userCredential: ""
     }
   }
 
@@ -30,8 +31,18 @@ export class Provider extends Component {
     .then(res => {
       if(res.status === 200){
         return res.json()
-        .then(user => {
-          this.setState({ user: user.name.firstName })
+        .then(user => user.name)
+        .then(name => {
+          this.setState({
+            user: {
+              firstName: name.firstName,
+              lastName: name.lastName
+            },
+            userCredential: {
+              emailAddress,
+              password
+            }
+          })
         })
       } else {
         return res;
@@ -46,10 +57,11 @@ export class Provider extends Component {
 
 
   render(){
-    const { user } = this.state;
+    const { user, userCredential } = this.state;
 
     const value = {
       user,
+      userCredential,
       actions: {
         signIn: this.signIn,
         signOut: this.signOut

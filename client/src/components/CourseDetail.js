@@ -37,8 +37,9 @@ export default class CourseDetail extends Component {
   render(){
     const { id } = this.props.match.params;
     const { title, description, estimatedTime } = this.state.course;
-    const { firstName, lastName } = this.state.userCourse;
+    const { firstName, lastName, emailAddress} = this.state.userCourse;
     const { materialsNeeded } = this.state;
+    const { userCredential } = this.props.context;
 
     let materialsList = []
 
@@ -61,8 +62,15 @@ export default class CourseDetail extends Component {
       <div>
         <div className="actions--bar">
           <div className="bounds">
-            <div className="grid-100"><span><Link className="button" to={`/courses/${id}/update`}>Update Course</Link><Link className="button" to="#">Delete Course</Link></span><Link
-                className="button button-secondary" to="/">Return to List</Link></div>
+            <div className="grid-100">
+            { emailAddress === userCredential.emailAddress ?
+              <span>
+                <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
+                <Link className="button" to="#">Delete Course</Link>
+              </span>
+            : " "}
+              <Link className="button button-secondary" to="/">Return to List</Link>
+            </div>
           </div>
         </div>
         <div className="bounds course--detail">

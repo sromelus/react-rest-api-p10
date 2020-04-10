@@ -27,11 +27,11 @@ export default class CreateCourse extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { title, description, estimatedTime, materialsNeeded } = this.state
+    const { title, description, estimatedTime, materialsNeeded } = this.state;
 
-    const course = { title, description, estimatedTime, materialsNeeded }
+    const { emailAddress, password } = this.props.context.userCredential;
 
-    const encodedCredentials = btoa(`j@j.com:james`);
+    const encodedCredentials = btoa(`${emailAddress}:${password}`);
 
       fetch('http://localhost:5000/api/courses', {
         method: "POST",
@@ -39,7 +39,7 @@ export default class CreateCourse extends Component {
           'Content-Type': 'application/json; charset=utf-8',
           'Authorization': `Basic ${encodedCredentials}`
         },
-        body: JSON.stringify(course)
+        body: JSON.stringify(this.state)
       })
       .then(res => {
         if (res.status === 201) {
@@ -63,6 +63,9 @@ export default class CreateCourse extends Component {
 
 
   render(){
+
+    const { user } = this.props.context;
+
     return (
       <div className="bounds course--detail">
         <h1>Create Course</h1>
@@ -74,7 +77,9 @@ export default class CreateCourse extends Component {
                 <h4 className="course--label">Course</h4>
                 <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..."
                     onChange={this.handleChange} value={this.state.title}/></div>
-                <p>By Joe Smith</p>
+                <p>By
+                { user ? ` ${user.firstName} ${user.lastName}` : " "}
+                </p>
               </div>
               <div className="course--description">
                 <div><textarea id="description" name="description" className="" placeholder="Course description..." onChange={this.handleChange} value={this.state.description}></textarea></div>
