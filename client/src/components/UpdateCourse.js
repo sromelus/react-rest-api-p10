@@ -26,7 +26,11 @@ export default class UpdateCourse extends Component {
   }
 
   componentDidMount(){
+
     const { id } = this.props.match.params;
+
+    console.log('mounted');
+    console.log(this.props);
 
     fetch(`http://localhost:5000/api/courses/${id}`)
     .then(res => {
@@ -40,6 +44,7 @@ export default class UpdateCourse extends Component {
     })
     .then(res => res.json())
     .then(body => {
+      console.log(body);
       this.setState({
         title: body.course.title,
         description: body.course.description,
@@ -104,6 +109,7 @@ export default class UpdateCourse extends Component {
         materialsList = materialsNeeded.split(',');
       }
     }
+
 
     return (
       <div className="bounds course--detail">
