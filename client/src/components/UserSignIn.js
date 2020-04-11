@@ -53,8 +53,6 @@ export default class UserSignIn extends Component {
 
   render(){
 
-    const { emailAddress, password } = this.state
-
     return (
       <div className="bounds">
         <div className="grid-33 centered signin">
