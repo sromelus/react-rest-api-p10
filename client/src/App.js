@@ -22,6 +22,7 @@ import PrivateRoute from './PrivateRoute';
 
 const HeaderWithContext = withcontext(Header);
 const UserSignInWithContext = withcontext(UserSignIn);
+const UserSignUpWithContext = withcontext(UserSignUp);
 const UserSignOutWithContext = withcontext(UserSignOut);
 const CreateCourseWithContext = withcontext(CreateCourse);
 const UpdateCourseWithContext = withcontext(UpdateCourse);
@@ -42,7 +43,7 @@ export default () => {
           <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
           <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} />
           <PrivateRoute path="/courses/:id/delete" component={DeleteCourseWithContext} />
-          <Route path="/signup" component={UserSignUp} />
+          <Route path="/signup" component={UserSignUpWithContext} />
           <Route path="/signin" component={UserSignInWithContext} />
           <Route path="/signout" component={UserSignOutWithContext} />
           <Route path="/forbidden" component={Forbidden} />

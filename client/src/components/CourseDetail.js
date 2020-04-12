@@ -17,10 +17,8 @@ export default class CourseDetail extends Component {
     .then(res => {
       if(res.ok){
         return res;
-      } else {
-        let errorMessage = `${res.status} (${res.statusText})`
-        const error = new Error(errorMessage);
-        throw(error);
+      } else if(res.status === 404){
+        this.props.history.push('/notfound')
       }
     })
     .then(res => res.json())
@@ -31,7 +29,10 @@ export default class CourseDetail extends Component {
         userCourse: body.course.userCourse
       })
     })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
+    .catch( err => {
+      console.log(err);
+      this.props.history.push('/error');
+    })
   }
 
   render(){
@@ -57,7 +58,7 @@ export default class CourseDetail extends Component {
         <li key={i}>{material}</li>
       )
     })
-    
+
 
     return (
       <div>

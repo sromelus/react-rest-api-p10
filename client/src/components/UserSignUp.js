@@ -20,9 +20,6 @@ export default class UserSignUp extends Component {
     this.props.history.push('/');
   }
 
-  signIn = () => {
-    this.props.history.push('/');
-  }
 
   handleChange = (e) => {
     this.setState({
@@ -43,7 +40,9 @@ export default class UserSignUp extends Component {
       }))
     } else {
 
-      const user = { firstName, lastName, emailAddress, password }
+      const user = { firstName, lastName, emailAddress, password };
+
+      const { signIn } = this.props.context.actions;
 
       fetch('http://localhost:5000/api/users', {
         method: "POST",
@@ -54,29 +53,32 @@ export default class UserSignUp extends Component {
       })
       .then(res => {
         if (res.status === 201) {
-          this.signIn();
+          console.log(this.props.location);
+          signIn(emailAddress, password)
+          .then(() => {
+              this.props.history.push('/');
+            });
           return [];
         } else if (res.status === 400){
             return res.json()
             .then(body => {
-              this.setState( prevState => ({
+              this.setState({
                 errors: body.errors
-              }))
+              })
             })
         } else if (res.status === 409){
           return res.json()
-            .then(body => {
-              this.setState(prevState => ({
-                errors: [ body.error ]
-              }))
-            })
-        } else {
-          let errorMessage = `${res.status}(${res.statusText})`
-          const error = new Error(errorMessage);
-          throw(error);
+          .then(body => {
+            this.setState(prevState => ({
+              errors: [ body.error ]
+            }))
+          })
         }
       })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
+      .catch( err => {
+        console.log(err);
+        this.props.history.push('/error');
+      })
     }
   }
 
@@ -111,7 +113,6 @@ export default class UserSignUp extends Component {
               </div>
             </form>
           </div>
-          <p>&nbsp;</p>
           <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
         </div>
       </div>

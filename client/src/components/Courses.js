@@ -15,17 +15,16 @@ export default class Courses extends Component {
     .then(res => {
       if(res.ok){
         return res;
-      } else {
-        let errorMessage = `${res.status} (${res.statusText})`
-        const error = new Error(errorMessage);
-        throw(error);
-      }
+      } 
     })
     .then(res => res.json())
     .then(body => {
       this.setState({ courses: body.courses})
     })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
+    .catch( err => {
+      console.log(err);
+      this.props.history.push('/error');
+    })
   }
 
   render(){

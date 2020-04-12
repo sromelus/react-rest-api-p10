@@ -36,15 +36,10 @@ export default class UpdateCourse extends Component {
     .then(res => {
       if(res.ok){
         return res;
-      } else {
-        let errorMessage = `${res.status} (${res.statusText})`
-        const error = new Error(errorMessage);
-        throw(error);
       }
     })
     .then(res => res.json())
     .then(body => {
-      console.log(body);
       this.setState({
         title: body.course.title,
         description: body.course.description,
@@ -53,7 +48,10 @@ export default class UpdateCourse extends Component {
         userCourse: body.course.userCourse
       })
     })
-    .catch(error => console.error(`Error in fetch: ${error.message}`));
+    .catch( err => {
+      console.log(err);
+      this.props.history.push('/error');
+    })
   }
 
   handleSubmit = (e) => {

@@ -47,23 +47,21 @@ export default class CreateCourse extends Component {
         if (res.status === 201) {
           this.props.history.push('/');
           return [];
-        } else if (res.status === 400 || res.status === 401 || res.status === 403){
+        } else if (res.status === 400 ||res.status === 401 ){
             return res.json()
             .then(body => {
               this.setState( prevState => ({
                 errors: body.message
               }))
             })
-        } else {
-          let errorMessage = `${res.status}(${res.statusText})`
-          const error = new Error(errorMessage);
-          throw(error);
-        }
       })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
+      .catch( err => {
+        console.log(err);
+        this.props.history.push('/error');
+      })
   }
 
-
+|| res.status === 401 || res.status === 403
   render(){
 
     const { user } = this.props.context;
