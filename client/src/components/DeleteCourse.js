@@ -27,6 +27,13 @@ export default class DeleteCourse extends Component {
         } else if (res.status === 403){
           this.props.history.push('/forbidden');
           return [];
+        } else if (res.status === 401){
+            return res.json()
+            .then(body => {
+              this.setState( prevState => ({
+                errors: body.message
+              }))
+            })
         }
       })
       .catch(err => {
@@ -34,6 +41,14 @@ export default class DeleteCourse extends Component {
         this.props.history.push('/error');
       })
   }
+
+  cancel = (e) => {
+    e.preventDefault()
+    const { id } = this.props.match.params;
+    this.props.history.push(`/courses/${id}`);
+  }
+
+
 
   render(){
 
@@ -43,7 +58,7 @@ export default class DeleteCourse extends Component {
           <div className="bounds">
             <div className="grid-100">
             <p> Are you sure want to delete this course?</p>
-              <Link className="button button-secondary" to="/">CANCEL</Link>
+              <button className="button button-secondary" onClick={this.cancel}>CANCEL</button>
               <button className="button" onClick={this.submit}>YES</button>
             </div>
           </div>

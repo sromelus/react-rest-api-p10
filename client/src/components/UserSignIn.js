@@ -40,9 +40,9 @@ export default class UserSignIn extends Component {
       if(res === undefined) {
         this.props.history.push('/');
       } else if(res.status === 401) {
-          this.setState({
-              errors: [ 'Sign-in was unsuccessful' ]
-          });
+        this.setState({
+            errors: [ 'Sign-in was unsuccessful' ]
+        });
       }
     })
     .catch(err => {

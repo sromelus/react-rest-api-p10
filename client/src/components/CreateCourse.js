@@ -48,12 +48,13 @@ export default class CreateCourse extends Component {
           this.props.history.push('/');
           return [];
         } else if (res.status === 400 ||res.status === 401 ){
-            return res.json()
-            .then(body => {
-              this.setState( prevState => ({
-                errors: body.message
-              }))
+          return res.json()
+          .then(body => {
+            this.setState({
+              errors: body.message
             })
+          })
+        }
       })
       .catch( err => {
         console.log(err);
@@ -61,7 +62,6 @@ export default class CreateCourse extends Component {
       })
   }
 
-|| res.status === 401 || res.status === 403
   render(){
 
     const { user } = this.props.context;

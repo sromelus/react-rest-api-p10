@@ -29,13 +29,12 @@ export default class UpdateCourse extends Component {
 
     const { id } = this.props.match.params;
 
-    console.log('mounted');
-    console.log(this.props);
-
     fetch(`http://localhost:5000/api/courses/${id}`)
     .then(res => {
       if(res.ok){
         return res;
+      } else if(res.status === 404){
+        this.props.history.push('/notfound')
       }
     })
     .then(res => res.json())
@@ -78,20 +77,22 @@ export default class UpdateCourse extends Component {
         if (res.status === 204) {
           this.props.history.push('/');
           return [];
-        } else if (res.status === 400 || res.status === 401 || res.status === 403){
+        } else if (res.status === 400 || res.status === 401){
             return res.json()
             .then(body => {
               this.setState( prevState => ({
                 errors: body.message
               }))
             })
-        } else {
-          let errorMessage = `${res.status}(${res.statusText})`
-          const error = new Error(errorMessage);
-          throw(error);
+        } else if (res.status === 403 ){
+          this.props.history.push('/forbidden');
+          return [];
         }
       })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
+      .catch( err => {
+        console.log(err);
+        this.props.history.push('/error');
+      })
   }
 
   render(){

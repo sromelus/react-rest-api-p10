@@ -53,7 +53,6 @@ export default class UserSignUp extends Component {
       })
       .then(res => {
         if (res.status === 201) {
-          console.log(this.props.location);
           signIn(emailAddress, password)
           .then(() => {
               this.props.history.push('/');
