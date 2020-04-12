@@ -32,13 +32,13 @@ export default class UserSignIn extends Component {
     e.preventDefault();
 
     const { signIn } = this.props.context.actions;
-    const { from } = this.props.location.state;
+    // const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
 
     signIn(emailAddress, password)
     .then(res => {
       if(res === undefined) {
-        this.props.history.push(from);
+        this.props.history.push('/');
       } else if(res.status === 401) {
           this.setState({
               errors: [ 'Sign-in was unsuccessful' ]

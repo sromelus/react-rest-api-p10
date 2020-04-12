@@ -10,7 +10,6 @@ export default class Courses extends Component {
     }
   }
 
-
   componentDidMount(){
     fetch('http://localhost:5000/api/courses')
     .then(res => {

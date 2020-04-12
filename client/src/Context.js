@@ -6,7 +6,7 @@ export class Provider extends Component {
   constructor(){
     super()
     this.state = {
-      user: null,
+      user: "",
       userCredential: ""
     }
   }
