@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+const ReactMarkdown = require('react-markdown')
+
 
 export default class CourseDetail extends Component {
   constructor(){
@@ -44,24 +46,6 @@ export default class CourseDetail extends Component {
     const { materialsNeeded } = this.state;
     const { userCredential } = this.props.context;
 
-    let materialsList = []
-
-    if(materialsNeeded){
-      if(materialsNeeded.charAt() === '*'){
-        materialsList = materialsNeeded.split('*');
-        materialsList.shift()
-      } else {
-        materialsList = materialsNeeded.split(',');
-      }
-    }
-
-    const formattedMaterialsList = materialsList.map((material, i) => {
-      return (
-        <li key={i}>{material}</li>
-      )
-    })
-
-
     return (
       <div>
         <div className="actions--bar">
@@ -100,7 +84,9 @@ export default class CourseDetail extends Component {
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
-                    {formattedMaterialsList}
+                    <ReactMarkdown
+                      source={materialsNeeded}
+                    />
                   </ul>
                 </li>
               </ul>

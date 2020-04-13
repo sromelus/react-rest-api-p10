@@ -12,6 +12,11 @@ export class Provider extends Component {
     }
   }
 
+  /**
+   * Set mounted course detail to global state.
+   * @param {object} Course.
+   * @returns {update state object} Update this.state.course
+   */
 
   makeCurrentCourseGlobal = (course) => {
     this.setState({
@@ -20,8 +25,8 @@ export class Provider extends Component {
   }
 
   /**
-   * A higher-order component that wraps the provided component in a Context Consumer component.
-   * @param {string, string, redirect path} EmailAddress . Password. Path.
+   * Sing in a user and set the response in global state.
+   * @param {string, string} EmailAddress . Password.
    * @returns {promise} A declaration that someting will happen.
    */
 
@@ -97,7 +102,6 @@ export const Consumer = Context.Consumer;
 
 export default function withContext(OriginalComponent) {
   return function ContextComponent(props) {
-    // debugger
     return (
       <Context.Consumer>
         {context => <OriginalComponent {...props} context={context} />}
