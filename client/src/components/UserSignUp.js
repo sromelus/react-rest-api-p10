@@ -1,6 +1,6 @@
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { ErrorsDisplay } from '../Context';
 
 export default class UserSignUp extends Component {
   constructor(){
@@ -20,7 +20,7 @@ export default class UserSignUp extends Component {
     this.props.history.push('/');
   }
 
-
+ //update state dynamically base on the event
   handleChange = (e) => {
     this.setState({
         [e.target.name] : e.target.value
@@ -118,27 +118,3 @@ export default class UserSignUp extends Component {
     );
   }
 }
-
-
-const ErrorsDisplay = ({ errors }) => {
-  let errorsDisplay = null;
-
-  if (errors.length) {
-    errorsDisplay = (
-      <div>
-        <h2 className="validation--errors--label">Validation errors</h2>
-        <div className="validation-errors">
-          <ul>
-            {errors.map((error, i) => <li key={i}>{error}</li>)}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-
-  return errorsDisplay;
-}
-
-
-
-// UserSignUp -  The component also renders a "Sign Up" button that when clicked sends a POST request to the REST API's /api/users route and signs in the user. This component also renders a "Cancel" button that returns the user to the default route (i.e. the list of courses).

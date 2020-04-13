@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+// ReactMarkdown provides the formating style to display the list of materials for courses
 const ReactMarkdown = require('react-markdown')
 
 
@@ -14,6 +15,7 @@ export default class CourseDetail extends Component {
   }
 
   componentDidMount(){
+    //destructure the makeCurrentCourseGlobal from props
     const { makeCurrentCourseGlobal } = this.props.context.actions;
     const { id } = this.props.match.params;
     fetch(`http://localhost:5000/api/courses/${id}`)
@@ -31,6 +33,13 @@ export default class CourseDetail extends Component {
         materialsNeeded: body.course.materialsNeeded,
         userCourse: body.course.userCourse
       })
+
+      /**
+       * makeCurrentCourseGlobal function sets update state course detail to global state.
+       * @param {object} Course.
+       * @returns {update state object} Update this.state.course
+       * makeCurrentCourseGlobal is declared in context.js
+       */
       makeCurrentCourseGlobal(this.state.course)
     })
     .catch( err => {
@@ -44,6 +53,7 @@ export default class CourseDetail extends Component {
     const { title, description, estimatedTime } = this.state.course;
     const { firstName, lastName, emailAddress} = this.state.userCourse;
     const { materialsNeeded } = this.state;
+    //import from context.js
     const { userCredential } = this.props.context;
 
     return (
@@ -51,6 +61,7 @@ export default class CourseDetail extends Component {
         <div className="actions--bar">
           <div className="bounds">
             <div className="grid-100">
+            {/* Use ternary operator to condionaly display the update and delete buttons based on user Authorization*/}
             { !(emailAddress === userCredential.emailAddress) ?
               <span></span>
             :
@@ -84,6 +95,7 @@ export default class CourseDetail extends Component {
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
+                  {/* ReactMarkdown provides the formating style to display the list of materials for courses */}
                     <ReactMarkdown
                       source={materialsNeeded}
                     />

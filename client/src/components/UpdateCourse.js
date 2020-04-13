@@ -1,5 +1,5 @@
-
 import React, { Component } from 'react';
+import { ErrorsDisplay } from '../Context';
 
 export default class UpdateCourse extends Component {
   constructor(){
@@ -19,6 +19,7 @@ export default class UpdateCourse extends Component {
     this.props.history.push('/');
   }
 
+  //update state dynamically base on the event
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -166,24 +167,3 @@ export default class UpdateCourse extends Component {
     );
   }
 }
-
-const ErrorsDisplay = ({ errors }) => {
-  let errorsDisplay = null;
-
-  if (errors.length) {
-    errorsDisplay = (
-      <div>
-        <h2 className="validation--errors--label">Validation errors</h2>
-        <div className="validation-errors">
-          <ul>
-            {errors.map((error, i) => <li key={i}>{error}</li>)}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-  return errorsDisplay;
-}
-
-
-// UpdateCourse - This component provides the "Update Course" screen by rendering a form that allows a user to update one of their existing courses. The component also renders an "Update Course" button that when clicked sends a PUT request to the REST API's /api/courses/:id route. This component also renders a "Cancel" button that returns the user to the "Course Detail" screen.

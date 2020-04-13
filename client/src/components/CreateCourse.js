@@ -1,5 +1,5 @@
-
 import React, { Component } from 'react';
+import { ErrorsDisplay } from '../Context';
 
 export default class CreateCourse extends Component {
   constructor(){
@@ -48,6 +48,7 @@ export default class CreateCourse extends Component {
         if (res.status === 201) {
           this.props.history.push('/');
           return [];
+        //update the errors state if the request is bad or unthorized
         } else if (res.status === 400 ||res.status === 401 ){
           return res.json()
           .then(body => {
@@ -112,23 +113,3 @@ export default class CreateCourse extends Component {
     );
   }
 }
-
-const ErrorsDisplay = ({ errors }) => {
-  let errorsDisplay = null;
-
-  if (errors.length) {
-    errorsDisplay = (
-      <div>
-        <h2 className="validation--errors--label">Validation errors</h2>
-        <div className="validation-errors">
-          <ul>
-            {errors.map((error, i) => <li key={i}>{error}</li>)}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-  return errorsDisplay;
-}
-
-// CreateCourse - This component provides the "Create Course" screen by rendering a form that allows a user to create a new course. The component also renders a "Create Course" button that when clicked sends a POST request to the REST API's /api/courses route. This component also renders a "Cancel" button that returns the user to the default route (i.e. the list of courses).

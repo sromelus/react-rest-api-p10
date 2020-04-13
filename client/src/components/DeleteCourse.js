@@ -40,6 +40,10 @@ export default class DeleteCourse extends Component {
       })
   }
 
+  /**
+   * Cancel redirect back to the course detail page.
+   * @param {object} eventObject.
+   */
   cancel = (e) => {
     e.preventDefault()
     const { id } = this.props.match.params;

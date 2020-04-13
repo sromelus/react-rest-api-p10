@@ -1,5 +1,5 @@
-
 import React, { Component } from 'react';
+import { ErrorsDisplay } from '../Context';
 
 export default class UserSignIn extends Component {
   constructor(){
@@ -13,15 +13,13 @@ export default class UserSignIn extends Component {
     }
   }
 
+
   cancel = (e) => {
     e.preventDefault()
     this.props.history.push('/');
   }
 
-  signIn = () => {
-    this.props.history.push('/');
-  }
-
+  //update state dynamically base on the event
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -35,6 +33,7 @@ export default class UserSignIn extends Component {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { emailAddress, password } = this.state;
 
+    //if the signin response status is 401 - display 'Sign-in was unsuccessful'
     signIn(emailAddress, password)
     .then(res => {
       if(res === undefined) {
@@ -73,25 +72,3 @@ export default class UserSignIn extends Component {
     );
   }
 }
-
-const ErrorsDisplay = ({ errors }) => {
-  let errorsDisplay = null;
-
-  if (errors.length) {
-    errorsDisplay = (
-      <div>
-        <h2 className="validation--errors--label">Validation errors</h2>
-        <div className="validation-errors">
-          <ul>
-            {errors.map((error, i) => <li key={i}>{error}</li>)}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-
-  return errorsDisplay;
-}
-
-
-// UserSignIn - This component provides the "Sign In" screen by rendering a form that allows a user to sign using their existing account information. The component also renders a "Sign In" button that when clicked signs in the user and a "Cancel" button that returns the user to the default route (i.e. the list of courses).

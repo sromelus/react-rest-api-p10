@@ -10,12 +10,13 @@ export default class Courses extends Component {
     }
   }
 
+
   componentDidMount(){
     fetch('http://localhost:5000/api/courses')
     .then(res => {
       if(res.ok){
         return res;
-      } 
+      }
     })
     .then(res => res.json())
     .then(body => {
@@ -29,6 +30,7 @@ export default class Courses extends Component {
 
   render(){
     const { user } = this.props.context;
+    //map over the courses and return each course within and li tag
     const courses = this.state.courses.map(course => {
       return (
         <CourseScreen
@@ -42,6 +44,7 @@ export default class Courses extends Component {
     return (
       <div className="bounds">
         {courses}
+        {/* Use ternary operator to condionaly display the create course tag based on user Authorization */}
         { user ?
         <div className="grid-33">
           <Link className="course--module course--add--module" to="/courses/create">
