@@ -27,6 +27,7 @@ export default class UpdateCourse extends Component {
 
   componentDidMount(){
 
+    const { emailAddress } = this.props.context.userCredential;
     const { id } = this.props.match.params;
 
     fetch(`http://localhost:5000/api/courses/${id}`)
@@ -46,12 +47,20 @@ export default class UpdateCourse extends Component {
         materialsNeeded: body.course.materialsNeeded,
         userCourse: body.course.userCourse
       })
+      //check for user credential validity before allowing the page to render
+      if(emailAddress === this.state.userCourse.emailAddress){
+        console.log('Access granted');
+      } else {
+        this.props.history.push('/forbidden');
+        console.log('Access denied');
+      }
     })
     .catch( err => {
       console.log(err);
       this.props.history.push('/error');
     })
   }
+
 
   handleSubmit = (e) => {
     e.preventDefault();

@@ -7,8 +7,16 @@ export class Provider extends Component {
     super()
     this.state = {
       user: "",
-      userCredential: ""
+      userCredential: "",
+      course: ""
     }
+  }
+
+
+  makeCurrentCourseGlobal = (course) => {
+    this.setState({
+      course: course
+    })
   }
 
   /**
@@ -57,14 +65,17 @@ export class Provider extends Component {
 
 
   render(){
-    const { user, userCredential } = this.state;
+    const { user, userCredential, course } = this.state;
+
 
     const value = {
       user,
       userCredential,
+      course,
       actions: {
         signIn: this.signIn,
-        signOut: this.signOut
+        signOut: this.signOut,
+        makeCurrentCourseGlobal: this.makeCurrentCourseGlobal
       }
     }
 

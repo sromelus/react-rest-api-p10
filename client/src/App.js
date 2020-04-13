@@ -31,7 +31,6 @@ const DeleteCourseWithContext = withcontext(DeleteCourse);
 const CoursesWithContext = withcontext(Courses);
 
 export default () => {
-
   return (
     <Router>
       <div>
@@ -39,10 +38,10 @@ export default () => {
         <Switch>
           <Route exact path="/" component={CoursesWithContext} />
           <Route exact path="/courses" component={CoursesWithContext} />
-          <Route exact path="/courses/:id" component={CourseDetailWithContext} />
           <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
           <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} />
           <PrivateRoute path="/courses/:id/delete" component={DeleteCourseWithContext} />
+          <Route exact path="/courses/:id" component={CourseDetailWithContext} />
           <Route path="/signup" component={UserSignUpWithContext} />
           <Route path="/signin" component={UserSignInWithContext} />
           <Route path="/signout" component={UserSignOutWithContext} />
@@ -54,3 +53,6 @@ export default () => {
     </Router>
   )
 }
+
+// <Route exact path="/courses" component={CoursesWithContext} />
+// <Route exact path="/courses/:id" component={CourseDetailWithContext} />

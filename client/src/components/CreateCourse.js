@@ -27,6 +27,7 @@ export default class CreateCourse extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     const { title, description, estimatedTime, materialsNeeded } = this.state;
 
     const course = { title, description, estimatedTime, materialsNeeded }

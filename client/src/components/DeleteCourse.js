@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 export default class DeleteCourse extends Component {
-
 
   submit = (e) => {
     e.preventDefault();
@@ -52,6 +50,10 @@ export default class DeleteCourse extends Component {
 
   render(){
 
+    const { firstName, lastName } = this.props.context.user;
+    const { title } = this.props.context.course;
+
+
     return (
       <div>
         <div className="actions--bar">
@@ -67,8 +69,8 @@ export default class DeleteCourse extends Component {
           <div className="grid-66">
             <div className="course--header">
               <h4 className="course--label">Course</h4>
-              <h3 className="course--title">title</h3>
-              <p>By Allen Malta</p>
+              <h3 className="course--title">{title}</h3>
+              <p>By {`${firstName} ${lastName}`}</p>
             </div>
             <div className="course--description">
             </div>

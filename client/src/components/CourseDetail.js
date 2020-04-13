@@ -12,6 +12,7 @@ export default class CourseDetail extends Component {
   }
 
   componentDidMount(){
+    const { makeCurrentCourseGlobal } = this.props.context.actions;
     const { id } = this.props.match.params;
     fetch(`http://localhost:5000/api/courses/${id}`)
     .then(res => {
@@ -28,6 +29,7 @@ export default class CourseDetail extends Component {
         materialsNeeded: body.course.materialsNeeded,
         userCourse: body.course.userCourse
       })
+      makeCurrentCourseGlobal(this.state.course)
     })
     .catch( err => {
       console.log(err);
