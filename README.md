@@ -5,7 +5,9 @@ This project is a front end application that manages a list of course from an AP
 
 ## Getting Started
 
-To get up and running with this project, run the following commands from the root of the folder that contains this README file.
+To get up and running with this project, run the following commands from the root of both the `api` and  the `client` folder.
+
+## api - Folder
 
 First, install the project's dependencies using `npm`.
 
@@ -29,12 +31,20 @@ npm start
 To test the Express server, browse to the URL localhost:5000.
 
 
-# REACT
+## client - Folder
 
+First, install the project's dependencies using `npm`.
 
-In the project directory, you can run:
+```
+npm install
 
-### `npm start`
+```
+
+And lastly, start the application.
+
+```
+npm start
+```
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in
