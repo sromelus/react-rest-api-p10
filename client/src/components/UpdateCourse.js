@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ErrorsDisplay } from '../Context';
+import ErrorsDisplay from '../screens/ErrorsDisplay';
 
 export default class UpdateCourse extends Component {
   constructor(){

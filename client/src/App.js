@@ -53,6 +53,3 @@ export default () => {
     </Router>
   )
 }
-
-// <Route exact path="/courses" component={CoursesWithContext} />
-// <Route exact path="/courses/:id" component={CourseDetailWithContext} />

@@ -6,7 +6,8 @@ export default class Courses extends Component {
   constructor(){
     super()
     this.state = {
-      courses: []
+      courses: [],
+      className: "show"
     }
   }
 
@@ -20,7 +21,10 @@ export default class Courses extends Component {
     })
     .then(res => res.json())
     .then(body => {
-      this.setState({ courses: body.courses})
+      this.setState({
+        courses: body.courses,
+        className: "hidden"
+      })
     })
     .catch( err => {
       console.log(err);
@@ -43,6 +47,8 @@ export default class Courses extends Component {
 
     return (
       <div className="bounds">
+        <h1 className={this.state.className}> Loading... </h1>
+
         {courses}
         {/* Use ternary operator to condionaly display the create course tag based on user Authorization */}
         { user ?
@@ -56,6 +62,7 @@ export default class Courses extends Component {
           </Link>
         </div>
         : " "}
+
       </div>
     );
   }

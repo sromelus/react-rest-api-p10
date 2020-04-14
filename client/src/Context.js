@@ -49,14 +49,15 @@ export class Provider extends Component {
           this.setState({
             user: {
               firstName: user.firstName,
-              lastName: user.lastName
+              lastName: user.lastName,
+              emailAddress
             },
             userCredential: {
               emailAddress,
               password
             }
           })
-          Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+          Cookies.set('authenticatedUser', JSON.stringify(this.state.user), { expires: 1 });
         })
       } else {
         return res;
@@ -73,7 +74,6 @@ export class Provider extends Component {
 
   render(){
     const { user, userCredential, course } = this.state;
-
 
     const value = {
       user,

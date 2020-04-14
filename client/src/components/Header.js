@@ -8,7 +8,7 @@ export default class Header extends PureComponent {
       return (
         <div className="header">
           <div className="bounds">
-            <h1 className="header--logo"><Link to="/">Courses</Link></h1>
+            <h1 className="header--logo" title="Click to navigate to homepage"><Link to="/">Courses</Link></h1>
             {/* Use ternary operator to condionaly display the signin and singout buttons based on user Authorization */}
             { user ?
               <nav>

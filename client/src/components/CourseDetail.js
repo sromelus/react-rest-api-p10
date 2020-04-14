@@ -54,7 +54,7 @@ export default class CourseDetail extends Component {
     const { firstName, lastName, emailAddress} = this.state.userCourse;
     const { materialsNeeded } = this.state;
     //import from context.js
-    const { userCredential } = this.props.context;
+    const { user } = this.props.context;
 
     return (
       <div>
@@ -62,7 +62,7 @@ export default class CourseDetail extends Component {
           <div className="bounds">
             <div className="grid-100">
             {/* Use ternary operator to condionaly display the update and delete buttons based on user Authorization*/}
-            { !(emailAddress === userCredential.emailAddress) ?
+            { !(emailAddress === user.emailAddress) ?
               <span></span>
             :
               <span>

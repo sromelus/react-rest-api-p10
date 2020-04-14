@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { ErrorsDisplay } from '../Context';
+import ErrorsDisplay from '../screens/ErrorsDisplay';
 
 export default class UserSignUp extends Component {
   constructor(){
