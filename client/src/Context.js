@@ -6,7 +6,7 @@ export class Provider extends Component {
   constructor(){
     super()
     this.state = {
-      user: "",
+      user: Cookies.getJSON('authenticatedUser') || null,
       userCredential: "",
       course: ""
     }
@@ -45,17 +45,18 @@ export class Provider extends Component {
       if(res.status === 200){
         return res.json()
         .then(user => user.name)
-        .then(name => {
+        .then(user => {
           this.setState({
             user: {
-              firstName: name.firstName,
-              lastName: name.lastName
+              firstName: user.firstName,
+              lastName: user.lastName
             },
             userCredential: {
               emailAddress,
               password
             }
           })
+          Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
         })
       } else {
         return res;
@@ -66,6 +67,7 @@ export class Provider extends Component {
 
   signOut = () => {
     this.setState({ user: null });
+    Cookies.remove('authenticatedUser');
   }
 
 
@@ -77,6 +79,7 @@ export class Provider extends Component {
       user,
       userCredential,
       course,
+      // Add the 'actions' property and object
       actions: {
         signIn: this.signIn,
         signOut: this.signOut,
