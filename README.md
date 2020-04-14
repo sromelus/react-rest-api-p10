@@ -1,4 +1,4 @@
-# USER INTERFACE OF COURSES API
+# USER INTERFACE OF THE COURSES API
 
 This project is a front end application that manages a list of course from an API that serves a list of courses and users.
 
