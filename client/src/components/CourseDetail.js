@@ -14,6 +14,34 @@ export default class CourseDetail extends Component {
     }
   }
 
+
+//   .then(response => {
+//   if(response.ok) {
+//     return response;
+//   } else {
+//     let errorMessage = `${response.status} (${response.statusText})`
+//     const error = new Error(errorMessage);
+//     throw(error);
+//   }
+// })
+// .then(response => response.json())
+// .then(response => {
+//   if (this.componentisMounted) {
+//     this.setState({
+//       imageData: response.photos.photo,
+//       statusText: response.stat
+//     })
+//   }
+// })
+// .catch(error => console.error(`Error in fetch: ${error.message}`))
+// }
+
+// else if(res.status === 404){
+//   console.log(res.status);
+//   this.props.history.push('/notfound')
+//   res.cancel();
+// }
+
   componentDidMount(){
     //destructure the makeCurrentCourseGlobal from props
     const { makeCurrentCourseGlobal } = this.props.context.actions;
@@ -22,8 +50,15 @@ export default class CourseDetail extends Component {
     .then(res => {
       if(res.ok){
         return res;
-      } else if(res.status === 404){
-        this.props.history.push('/notfound')
+      } else {
+        let errorMessage = `${res.status} (${res.statusText})`
+        let error = new Error(errorMessage);
+
+        if(res.status === 404){
+          error = { error, path: '/notfound'}
+        }
+
+        throw(error);
       }
     })
     .then(res => res.json())
@@ -42,14 +77,28 @@ export default class CourseDetail extends Component {
        */
       makeCurrentCourseGlobal(this.state.course)
     })
-    .catch( err => {
-      console.log(err);
-      this.props.history.push('/error');
+    .catch( error => {
+      console.log(error);
+      this.props.history.push(error.path);
     })
   }
 
+displayPlayButton = (currentUser, courseOwnerEmail) => {
+  const { id } = this.props.match.params;
+    if(currentUser){
+      if(currentUser.emailAddress === courseOwnerEmail) {
+        return (
+          <>
+            <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
+            <Link className="button" to={`/courses/${id}/delete`}>Delete Course</Link>
+          </>
+        )
+      }
+    }
+  }
+
   render(){
-    const { id } = this.props.match.params;
+
     const { title, description, estimatedTime } = this.state.course;
     const { firstName, lastName, emailAddress} = this.state.userCourse;
     const { materialsNeeded } = this.state;
@@ -61,15 +110,9 @@ export default class CourseDetail extends Component {
         <div className="actions--bar">
           <div className="bounds">
             <div className="grid-100">
-            {/* Use ternary operator to condionaly display the update and delete buttons based on user Authorization*/}
-            { !(emailAddress === user.emailAddress) ?
-              <span></span>
-            :
               <span>
-                <Link className="button" to={`/courses/${id}/update`}>Update Course</Link>
-                <Link className="button" to={`/courses/${id}/delete`}>Delete Course</Link>
+                {this.displayPlayButton(user, emailAddress)}
               </span>
-            }
               <Link className="button button-secondary" to="/">Return to List</Link>
             </div>
           </div>

@@ -50,7 +50,8 @@ export class Provider extends Component {
             user: {
               firstName: user.firstName,
               lastName: user.lastName,
-              emailAddress
+              emailAddress,
+              encodedCredentials
             },
             userCredential: {
               emailAddress,
@@ -73,7 +74,7 @@ export class Provider extends Component {
 
 
   render(){
-    const { user, userCredential, course } = this.state;
+    const { user, userCredential, course,  } = this.state;
 
     const value = {
       user,

@@ -14,9 +14,14 @@ export default class UpdateCourse extends Component {
     }
   }
 
+  /**
+   * Cancel redirect back to the course detail page.
+   * @param {object} eventObject.
+   */
   cancel = (e) => {
     e.preventDefault()
-    this.props.history.push('/');
+    const { id } = this.props.match.params;
+    this.props.history.push(`/courses/${id}`);
   }
 
   //update state dynamically base on the event
@@ -27,8 +32,13 @@ export default class UpdateCourse extends Component {
   }
 
   componentDidMount(){
+    let emailAddress = ""
+    const { user } = this.props.context;
 
-    const { emailAddress } = this.props.context.userCredential;
+    if(user) {
+       emailAddress = user.emailAddress;
+    }
+
     const { id } = this.props.match.params;
 
     fetch(`http://localhost:5000/api/courses/${id}`)
@@ -69,9 +79,7 @@ export default class UpdateCourse extends Component {
 
     const course = { title, description, estimatedTime, materialsNeeded }
 
-    const { emailAddress, password } = this.props.context.userCredential;
-
-    const encodedCredentials = btoa(`${emailAddress}:${password}`);
+    const { encodedCredentials } = this.props.context.user;
 
     const { id } = this.props.match.params;
 

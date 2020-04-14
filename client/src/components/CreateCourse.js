@@ -32,10 +32,8 @@ export default class CreateCourse extends Component {
 
     const course = { title, description, estimatedTime, materialsNeeded }
 
-    const { emailAddress, password } = this.props.context.userCredential;
-
-    const encodedCredentials = btoa(`${emailAddress}:${password}`);
-
+    const { encodedCredentials } = this.props.context.user;
+    
       fetch('http://localhost:5000/api/courses', {
         method: "POST",
         headers: {

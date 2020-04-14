@@ -5,9 +5,7 @@ export default class DeleteCourse extends Component {
   submit = (e) => {
     e.preventDefault();
 
-    const { emailAddress, password } = this.props.context.userCredential;
-
-    const encodedCredentials = btoa(`${emailAddress}:${password}`);
+    const { encodedCredentials } = this.props.context.user;
 
     const { id } = this.props.match.params;
 
