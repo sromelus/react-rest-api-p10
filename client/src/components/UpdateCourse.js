@@ -45,8 +45,15 @@ export default class UpdateCourse extends Component {
     .then(res => {
       if(res.ok){
         return res;
-      } else if(res.status === 404){
-        this.props.history.push('/notfound')
+      } else {
+        let errorMessage = `${res.status} (${res.statusText})`
+        let error = new Error(errorMessage);
+
+        if(res.status === 404){
+          error = { error, path: '/notfound'}
+        }
+
+        throw(error);
       }
     })
     .then(res => res.json())
@@ -66,9 +73,9 @@ export default class UpdateCourse extends Component {
         console.log('Access denied');
       }
     })
-    .catch( err => {
-      console.log(err);
-      this.props.history.push('/error');
+    .catch(error => {
+      console.log(error);
+      this.props.history.push(error.path);
     })
   }
 

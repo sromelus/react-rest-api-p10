@@ -2,6 +2,58 @@ import React, { Component } from 'react';
 
 export default class DeleteCourse extends Component {
 
+  constructor(){
+    super()
+    this.state = {
+      title: ""
+    }
+  }
+
+  componentDidMount(){
+    let emailAddress = ""
+    const { user } = this.props.context;
+
+    if(user) {
+       emailAddress = user.emailAddress;
+    }
+
+    const { id } = this.props.match.params;
+
+    fetch(`http://localhost:5000/api/courses/${id}`)
+    .then(res => {
+      if(res.ok){
+        return res;
+      } else {
+        let errorMessage = `${res.status} (${res.statusText})`
+        let error = new Error(errorMessage);
+
+        if(res.status === 404){
+          error = { error, path: '/notfound'}
+        }
+
+        throw(error);
+      }
+    })
+    .then(res => res.json())
+    .then(body => {
+      this.setState({
+        title: body.course.title,
+        userCourse: body.course.userCourse
+      })
+      //check for user credential validity before allowing the page to render
+      if(emailAddress === this.state.userCourse.emailAddress){
+        console.log('Access granted');
+      } else {
+        this.props.history.push('/forbidden');
+        console.log('Access denied');
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      this.props.history.push(error.path);
+    })
+  }
+
   submit = (e) => {
     e.preventDefault();
 
@@ -53,7 +105,7 @@ export default class DeleteCourse extends Component {
   render(){
 
     const { firstName, lastName } = this.props.context.user;
-    const { title } = this.props.context.course;
+    const { title } = this.state;
 
 
     return (

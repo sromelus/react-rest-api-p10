@@ -14,37 +14,7 @@ export default class CourseDetail extends Component {
     }
   }
 
-
-//   .then(response => {
-//   if(response.ok) {
-//     return response;
-//   } else {
-//     let errorMessage = `${response.status} (${response.statusText})`
-//     const error = new Error(errorMessage);
-//     throw(error);
-//   }
-// })
-// .then(response => response.json())
-// .then(response => {
-//   if (this.componentisMounted) {
-//     this.setState({
-//       imageData: response.photos.photo,
-//       statusText: response.stat
-//     })
-//   }
-// })
-// .catch(error => console.error(`Error in fetch: ${error.message}`))
-// }
-
-// else if(res.status === 404){
-//   console.log(res.status);
-//   this.props.history.push('/notfound')
-//   res.cancel();
-// }
-
   componentDidMount(){
-    //destructure the makeCurrentCourseGlobal from props
-    const { makeCurrentCourseGlobal } = this.props.context.actions;
     const { id } = this.props.match.params;
     fetch(`http://localhost:5000/api/courses/${id}`)
     .then(res => {
@@ -75,10 +45,10 @@ export default class CourseDetail extends Component {
        * @returns {update state object} Update this.state.course
        * makeCurrentCourseGlobal is declared in context.js
        */
-      makeCurrentCourseGlobal(this.state.course)
+      // makeCurrentCourseGlobal(this.state.course)
     })
     .catch( error => {
-      console.log(error);
+      console.error(error);
       this.props.history.push(error.path);
     })
   }

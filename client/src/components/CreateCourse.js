@@ -33,7 +33,7 @@ export default class CreateCourse extends Component {
     const course = { title, description, estimatedTime, materialsNeeded }
 
     const { encodedCredentials } = this.props.context.user;
-    
+
       fetch('http://localhost:5000/api/courses', {
         method: "POST",
         headers: {
@@ -57,7 +57,7 @@ export default class CreateCourse extends Component {
         }
       })
       .catch( err => {
-        console.log(err);
+        console.error(err);
         this.props.history.push('/error');
       })
   }

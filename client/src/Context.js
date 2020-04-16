@@ -7,8 +7,7 @@ export class Provider extends Component {
     super()
     this.state = {
       user: Cookies.getJSON('authenticatedUser') || null,
-      userCredential: "",
-      course: ""
+      userCredential: ""
     }
   }
 
@@ -18,11 +17,6 @@ export class Provider extends Component {
    * @returns {update state object} Update this.state.course
    */
 
-  makeCurrentCourseGlobal = (course) => {
-    this.setState({
-      course: course
-    })
-  }
 
   /**
    * Sing in a user and set the response in global state.
@@ -83,8 +77,7 @@ export class Provider extends Component {
       // Add the 'actions' property and object
       actions: {
         signIn: this.signIn,
-        signOut: this.signOut,
-        makeCurrentCourseGlobal: this.makeCurrentCourseGlobal
+        signOut: this.signOut
       }
     }
 
@@ -106,30 +99,11 @@ export const Consumer = Context.Consumer;
 
 export default function withContext(OriginalComponent) {
   return function ContextComponent(props) {
+    debugger
     return (
       <Context.Consumer>
         {context => <OriginalComponent {...props} context={context} />}
       </Context.Consumer>
     );
   }
-}
-
-// dynamically display erros based on the http response status
-export const ErrorsDisplay = ({ errors }) => {
-  let errorsDisplay = null;
-
-  if (errors.length) {
-    errorsDisplay = (
-      <div>
-        <h2 className="validation--errors--label">Validation errors</h2>
-        <div className="validation-errors">
-          <ul>
-            {errors.map((error, i) => <li key={i}>{error}</li>)}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-
-  return errorsDisplay;
 }
