@@ -13,6 +13,18 @@ export default class Courses extends Component {
 
 
   componentDidMount(){
+
+    const { state } = this.props.location;
+
+    if(state){
+      const { pathname } = state.from;
+      const isSingOutPath = (pathname === "/signout")
+      //check if previous location path is "/signout"
+      if (isSingOutPath) {
+        this.props.context.actions.signOut();
+      }
+    }
+
     fetch('http://localhost:5000/api/courses')
     .then(res => {
       if(res.ok){

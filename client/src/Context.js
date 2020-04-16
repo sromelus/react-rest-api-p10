@@ -12,13 +12,6 @@ export class Provider extends Component {
   }
 
   /**
-   * Set mounted course detail to global state.
-   * @param {object} Course.
-   * @returns {update state object} Update this.state.course
-   */
-
-
-  /**
    * Sing in a user and set the response in global state.
    * @param {string, string} EmailAddress . Password.
    * @returns {promise} A declaration that someting will happen.
@@ -46,10 +39,6 @@ export class Provider extends Component {
               lastName: user.lastName,
               emailAddress,
               encodedCredentials
-            },
-            userCredential: {
-              emailAddress,
-              password
             }
           })
           Cookies.set('authenticatedUser', JSON.stringify(this.state.user), { expires: 1 });
@@ -62,18 +51,16 @@ export class Provider extends Component {
   }
 
   signOut = () => {
-    this.setState({ user: null });
     Cookies.remove('authenticatedUser');
+    this.setState({ user: null });
   }
 
 
   render(){
-    const { user, userCredential, course,  } = this.state;
+    const { user } = this.state;
 
     const value = {
       user,
-      userCredential,
-      course,
       // Add the 'actions' property and object
       actions: {
         signIn: this.signIn,
@@ -99,7 +86,6 @@ export const Consumer = Context.Consumer;
 
 export default function withContext(OriginalComponent) {
   return function ContextComponent(props) {
-    debugger
     return (
       <Context.Consumer>
         {context => <OriginalComponent {...props} context={context} />}
