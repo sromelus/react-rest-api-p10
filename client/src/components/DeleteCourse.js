@@ -29,6 +29,8 @@ export default class DeleteCourse extends Component {
 
         if(res.status === 404){
           error = { error, path: '/notfound'}
+        } else {
+          error = { error, path: '/error'}
         }
 
         throw(error);

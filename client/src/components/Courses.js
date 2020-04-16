@@ -14,13 +14,14 @@ export default class Courses extends Component {
 
   componentDidMount(){
 
+    //check for location's state
     const { state } = this.props.location;
-
+    //check if previous location path is "/signout"
     if(state){
       const { pathname } = state.from;
       const isSingOutPath = (pathname === "/signout")
-      //check if previous location path is "/signout"
       if (isSingOutPath) {
+    //sign out current user if location state is equal to signout
         this.props.context.actions.signOut();
       }
     }
