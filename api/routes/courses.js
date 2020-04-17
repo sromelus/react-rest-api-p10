@@ -29,7 +29,6 @@ function asyncHandler(cb){
 
 //Returns a list of courses (including the user that owns each course)
 router.get('/', asyncHandler(async (req, res) => {
-
   const courses = await Course.findAll({
     //Use attributes property to only display specific properties to the api endpoint
     attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded', 'userId'],
@@ -44,7 +43,6 @@ router.get('/', asyncHandler(async (req, res) => {
 
 //Returns a the course (including the user that owns the course) for the provided course ID
 router.get('/:id', asyncHandler(async (req, res, next) => {
-
   const courses = await Course.findAll({
     attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded', 'userId'],
     include: [{
@@ -89,7 +87,6 @@ router.post('/', authenticateUser, courseInputsValidator, asyncHandler(async (re
 
 //Updates a course
 router.put('/:id', authenticateUser, courseInputsValidator, asyncHandler(async(req, res, next) => {
-
   //Used "express validator's" validationResult method to check for possible errors
   const errors = validationResult(req);
 
@@ -105,11 +102,11 @@ router.put('/:id', authenticateUser, courseInputsValidator, asyncHandler(async(r
       if(req.currentUser.id === course.userId){
         await Course.update({
         //The validation middleware for course overrides the "||".  "||" / "OR" Allows to update just one property
-          title: req.body.title || course.title,
-          description: req.body.description || course.description,
-          estimatedTime: req.body.estimatedTime || course.estimatedTime,
-          materialsNeeded: req.body.materialsNeeded || course.materialsNeeded,
-          userId: req.body.userId || course.userId
+          title: req.body.title,
+          description: req.body.description,
+          estimatedTime: req.body.estimatedTime,
+          materialsNeeded: req.body.materialsNeeded,
+          userId: req.body.userId
         },
         {
           where: {

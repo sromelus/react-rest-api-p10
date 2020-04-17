@@ -14,7 +14,7 @@ export default class UserSignIn extends Component {
     }
   }
 
-
+ // redirect to homepage
   cancel = (e) => {
     e.preventDefault()
     this.props.history.push('/');
@@ -43,6 +43,10 @@ export default class UserSignIn extends Component {
         this.setState({
             errors: [ 'Sign-in was unsuccessful' ]
         });
+      } else {
+        let errorMessage = `${res.status} (${res.statusText})`
+        let error = new Error(errorMessage);
+        throw(error);
       }
     })
     .catch(err => {

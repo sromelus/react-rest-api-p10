@@ -40,14 +40,6 @@ export default class CourseDetail extends Component {
         materialsNeeded: body.course.materialsNeeded,
         userCourse: body.course.userCourse
       })
-
-      /**
-       * makeCurrentCourseGlobal function sets update state course detail to global state.
-       * @param {object} Course.
-       * @returns {update state object} Update this.state.course
-       * makeCurrentCourseGlobal is declared in context.js
-       */
-      // makeCurrentCourseGlobal(this.state.course)
     })
     .catch( error => {
       console.error(error);
@@ -55,8 +47,14 @@ export default class CourseDetail extends Component {
     })
   }
 
-displayPlayButton = (currentUser, courseOwnerEmail) => {
-  const { id } = this.props.match.params;
+  /**
+   * displayPlayButton takes user information as parameter and return update and delete buttons if signed in user and course owner
+   has identical email address
+   * @param {object, string, integer} currentUser. courseOwnerEmail. id.
+   * @returns {jsx} update and delete button 
+   * add update and delete buttons to the course detail component
+   */
+displayPlayButton = (currentUser, courseOwnerEmail, id) => {
     if(currentUser){
       if(currentUser.emailAddress === courseOwnerEmail) {
         return (
@@ -70,56 +68,62 @@ displayPlayButton = (currentUser, courseOwnerEmail) => {
   }
 
   render(){
-
     const { title, description, estimatedTime } = this.state.course;
     const { firstName, lastName, emailAddress} = this.state.userCourse;
     const { materialsNeeded } = this.state;
+    const { id } = this.props.match.params;
     //import from context.js
     const { user } = this.props.context;
 
     return (
       <div>
-        <div className="actions--bar">
-          <div className="bounds">
-            <div className="grid-100">
-              <span>
-                {this.displayPlayButton(user, emailAddress)}
-              </span>
-              <Link className="button button-secondary" to="/">Return to List</Link>
+      { this.state.course ? (
+        <>
+          <div className="actions--bar">
+            <div className="bounds">
+              <div className="grid-100">
+                <span>
+                  {this.displayPlayButton(user, emailAddress, id)}
+                </span>
+                <Link className="button button-secondary" to="/">Return to List</Link>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="bounds course--detail">
-          <div className="grid-66">
-            <div className="course--header">
-              <h4 className="course--label">Course</h4>
-              <h3 className="course--title">{title}</h3>
-              <p>By {`${firstName} ${lastName}`}</p>
+          <div className="bounds course--detail">
+            <div className="grid-66">
+              <div className="course--header">
+                <h4 className="course--label">Course</h4>
+                <h3 className="course--title">{title}</h3>
+                <p>By {`${firstName} ${lastName}`}</p>
+              </div>
+              <div className="course--description">
+                {description}
+              </div>
             </div>
-            <div className="course--description">
-              {description}
+            <div className="grid-25 grid-right">
+              <div className="course--stats">
+                <ul className="course--stats--list">
+                  <li className="course--stats--list--item">
+                    <h4>Estimated Time</h4>
+                    <h3>{estimatedTime}</h3>
+                  </li>
+                  <li className="course--stats--list--item">
+                    <h4>Materials Needed</h4>
+                    <ul>
+                    {/* ReactMarkdown provides the formating style to display the list of materials for courses */}
+                      <ReactMarkdown
+                        source={materialsNeeded}
+                      />
+                    </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div className="grid-25 grid-right">
-            <div className="course--stats">
-              <ul className="course--stats--list">
-                <li className="course--stats--list--item">
-                  <h4>Estimated Time</h4>
-                  <h3>{estimatedTime}</h3>
-                </li>
-                <li className="course--stats--list--item">
-                  <h4>Materials Needed</h4>
-                  <ul>
-                  {/* ReactMarkdown provides the formating style to display the list of materials for courses */}
-                    <ReactMarkdown
-                      source={materialsNeeded}
-                    />
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        </>)
+        :
+        <h1 className="loading"> Loading... </h1>
+      }
       </div>
     );
   }

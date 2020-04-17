@@ -56,6 +56,7 @@ export default class DeleteCourse extends Component {
     })
   }
 
+ //
   submit = (e) => {
     e.preventDefault();
 
@@ -84,6 +85,10 @@ export default class DeleteCourse extends Component {
                 errors: body.message
               }))
             })
+        } else {
+          let errorMessage = `${res.status} (${res.statusText})`
+          let error = new Error(errorMessage);
+          throw(error);
         }
       })
       .catch(err => {
@@ -92,10 +97,7 @@ export default class DeleteCourse extends Component {
       })
   }
 
-  /**
-   * Cancel redirect back to the course detail page.
-   * @param {object} eventObject.
-   */
+// redirect to homepage
   cancel = (e) => {
     e.preventDefault()
     const { id } = this.props.match.params;
@@ -112,32 +114,38 @@ export default class DeleteCourse extends Component {
 
     return (
       <div>
-        <div className="actions--bar">
-          <div className="bounds">
-            <div className="grid-100">
-            <p> Are you sure want to delete this course?</p>
-              <button className="button button-secondary" onClick={this.cancel}>CANCEL</button>
-              <button className="button" onClick={this.submit}>YES</button>
+        { title ? (
+          <>
+            <div className="actions--bar">
+              <div className="bounds">
+                <div className="grid-100">
+                <p> Are you sure want to delete this course?</p>
+                  <button className="button button-secondary" onClick={this.cancel}>CANCEL</button>
+                  <button className="button" onClick={this.submit}>YES</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="bounds course--detail">
-          <div className="grid-66">
-            <div className="course--header">
-              <h4 className="course--label">Course</h4>
-              <h3 className="course--title">{title}</h3>
-              <p>By {`${firstName} ${lastName}`}</p>
+            <div className="bounds course--detail">
+              <div className="grid-66">
+                <div className="course--header">
+                  <h4 className="course--label">Course</h4>
+                  <h3 className="course--title">{title}</h3>
+                  <p>By {`${firstName} ${lastName}`}</p>
+                </div>
+                <div className="course--description">
+                </div>
+              </div>
+              <div className="grid-25 grid-right">
+                <div className="course--stats">
+                  <ul className="course--stats--list">
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div className="course--description">
-            </div>
-          </div>
-          <div className="grid-25 grid-right">
-            <div className="course--stats">
-              <ul className="course--stats--list">
-              </ul>
-            </div>
-          </div>
-        </div>
+          </>)
+          :
+          (<h1 className="loading"> Loading... </h1>)
+        }
       </div>
     );
   }

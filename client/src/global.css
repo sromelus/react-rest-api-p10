@@ -760,3 +760,7 @@ input:focus {
 .hidden {
   display: none;
 }
+
+.loading {
+  margin-left: 90px;
+}

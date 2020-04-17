@@ -13,7 +13,6 @@ export default class Courses extends Component {
 
 
   componentDidMount(){
-
     //check for location's state
     const { state } = this.props.location;
     //check if previous location path is "/signout"
@@ -44,6 +43,7 @@ export default class Courses extends Component {
       this.props.history.push('/error');
     })
   }
+
 
   render(){
     const { user } = this.props.context;

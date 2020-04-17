@@ -13,12 +13,13 @@ export default class CreateCourse extends Component {
     }
   }
 
+  // redirect to homepage
   cancel = (e) => {
     e.preventDefault()
     this.props.history.push('/');
   }
 
-
+  //dynamically update state based on event name
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -54,6 +55,10 @@ export default class CreateCourse extends Component {
               errors: body.message
             })
           })
+        } else {
+          let errorMessage = `${res.status} (${res.statusText})`
+          let error = new Error(errorMessage);
+          throw(error);
         }
       })
       .catch( err => {
@@ -91,7 +96,7 @@ export default class CreateCourse extends Component {
                   <li className="course--stats--list--item">
                     <h4>Estimated Time</h4>
                     <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input"
-                        placeholder="Hours" onChange={this.handleChange} value={`${this.state.estimatedTime}`}/></div>
+                        placeholder="Hours" onChange={this.handleChange} value={this.state.estimatedTime}/></div>
                   </li>
                   <li className="course--stats--list--item">
                     <h4>Materials Needed</h4>

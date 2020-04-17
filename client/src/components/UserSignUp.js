@@ -14,7 +14,7 @@ export default class UserSignUp extends Component {
       errors: []
     }
   }
-
+  // redirect to homepage
   cancel = (e) => {
     e.preventDefault()
     this.props.history.push('/');
@@ -72,6 +72,10 @@ export default class UserSignUp extends Component {
               errors: [ body.error ]
             }))
           })
+        } else {
+          let errorMessage = `${res.status} (${res.statusText})`
+          let error = new Error(errorMessage);
+          throw(error);
         }
       })
       .catch( err => {
