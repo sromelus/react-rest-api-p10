@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export default ({title, id, className}) => {
+const CourseScreen = ({title, id}) => {
     return (
       <>
         <div className="grid-33">
@@ -13,3 +14,10 @@ export default ({title, id, className}) => {
       </>
     );
 }
+
+CourseScreen.propTypes = {
+  title: PropTypes.string,
+  id: PropTypes.number
+};
+
+export default CourseScreen;
