@@ -46,7 +46,6 @@ export default class Courses extends Component {
 
 
   render(){
-    const { user } = this.props.context;
     //map over the courses and return each course within and li tag
     const courses = this.state.courses.map(course => {
       return (
@@ -61,10 +60,7 @@ export default class Courses extends Component {
     return (
       <div className="bounds">
         <h1 className={this.state.className}> Loading... </h1>
-
         {courses}
-        {/* Use ternary operator to condionaly display the create course tag based on user Authorization */}
-        { user ?
         <div className="grid-33">
           <Link className="course--module course--add--module" to="/courses/create">
             <h3 className="course--add--title">
@@ -74,8 +70,6 @@ export default class Courses extends Component {
             </h3>
           </Link>
         </div>
-        : " "}
-
       </div>
     );
   }
